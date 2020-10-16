@@ -4,8 +4,6 @@ require $_SESSION["docroot"] . "/php/string.php";
 
 class SessionManager
 {
-    public $sessions; //array(Session)
-
     function validate_session ( $current_session ) {
         SessionManager::cleanup();
         $sessions = SessionManager::get_sessions();
@@ -17,17 +15,33 @@ class SessionManager
         {
             return false;
         }
-
     }
 
     static function new_session ( $user ) {
+        $month = 60 * 60 * 24 * 31;
+        $expire = time() + $month;
+
+        $cookie = createSessionID($user);
+
+        $sessions = SessionManager::get_sessions();
+
+        $new_session = array( 
+            "id" => $cookie, 
+            "username" => $user, 
+            "expire" => $expire
+        );
+
+        array_push($sessions, $new_session);
+        file_put_contents($_SESSION["docroot"] . "/storage/sessions.tmp.json", json_encode(array('sessions' => $sessions)));
+        unlink($_SESSION["docroot"] . "/storage/sessions.json");
+        rename( $_SESSION["docroot"] . "/storage/sessions.tmp.json",$_SESSION["docroot"] . "/storage/sessions.json");
         
+        return $cookie;
     }
 
     private static function get_sessions () {
         if (file_exists($_SESSION["docroot"] . "/storage/sessions.json"))
         {
-
             $session_data = file_get_contents($_SESSION["docroot"] . "/storage/sessions.json");
             try {
                 $sessions = json_decode($session_data);
