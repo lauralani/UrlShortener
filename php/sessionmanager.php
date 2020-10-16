@@ -1,5 +1,7 @@
 <?php
 
+require $_SESSION["docroot"] . "/php/string.php";
+
 class SessionManager
 {
     public $sessions; //array(Session)
@@ -18,7 +20,7 @@ class SessionManager
 
     }
 
-    function new_session ( $user ) {
+    static function new_session ( $user ) {
         
     }
 
@@ -42,28 +44,54 @@ class SessionManager
     }
 
     static function cleanup () {
-        SessionManager::get_sessions();
 
-        $active_sessions = array('sessions' => array() );
+        $active_sessions = false;
 
-        foreach ( SessionManager::get_sessions() as $session )
+        $sessionarray = SessionManager::get_sessions();
+
+        echo json_encode($sessionarray);
+
+        echo "<br><br>";
+
+        $i = 0;
+
+        foreach ( $sessionarray as $session )
         {
+            
+            // echo $session->username . "<br><br>";
             if ($session->expire > time())
             {
                 // echo( $session->username . " is not expired! <br/>");
-                array_push($active_sessions["sessions"], $session);
+                // array_merge($active_sessions, $session);
+
+                // echo json_encode($session) . "<br><br>";
+
+                if (!$active_sessions)
+                {
+                    echo "<br>adding first array thing: Iteration" . $i . ", ID: " . $session->username . "<br>";
+                    $active_sessions = array($session);
+                }
+                else
+                {
+                    echo "<br>adding array thing: Iteration" . $i . ", ID: " . $session->username . "<br>";
+
+                    array_push($active_sessions, $session);
+                }
+
             }
             else 
             {
                 // echo( $session->username . " is expired! <br/>");
+                echo "<br>doing nothing: Iteration" . $i  . ", ID: " . $session->username . "<br>";
+                
             }
-
-            $json = json_encode($active_sessions);
-
-            // somehow the arrays dont get added correctly, TODO
-
-            var_dump($json);
+            $i = $i +1;
         }
+        $cleanedsessions = json_encode(array('sessions' => $active_sessions));
+        file_put_contents($_SESSION["docroot"] . "/storage/sessions.tmp.json", $cleanedsessions);
+
+        unlink($_SESSION["docroot"] . "/storage/sessions.json");
+        rename( $_SESSION["docroot"] . "/storage/sessions.tmp.json",$_SESSION["docroot"] . "/storage/sessions.json");
     }
 }
 
