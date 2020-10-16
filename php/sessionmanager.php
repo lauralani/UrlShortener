@@ -4,7 +4,7 @@ require $_SESSION["docroot"] . "/php/string.php";
 
 class SessionManager
 {
-    function validate_session ( $current_session ) {
+    static function validate_session ( $current_session ) {
         SessionManager::cleanup();
         $sessions = SessionManager::get_sessions();
 
@@ -108,7 +108,5 @@ class SessionManager
         rename( $_SESSION["docroot"] . "/storage/sessions.tmp.json",$_SESSION["docroot"] . "/storage/sessions.json");
     }
 }
-
-$sessionmanager = new SessionManager();
 
 ?>
