@@ -13,7 +13,6 @@ if (!empty($_GET["uri"]))
     //redirect to target
 }
 
-var_dump($_COOKIE);
 
 if ($_SESSION["loggedin"] != true)
 {
