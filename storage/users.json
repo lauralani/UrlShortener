@@ -1,11 +1,12 @@
-
 {
-    "lauralani" : {
-        "mail" : "dev@lauka.space",
-        "hmac" : "4EDC532114FDDC155FAB805A50459072DCB0E174E6A5A42BF17F52C1D5D955F2"
-    },
-    "test" : {
-        "mail" : "test@lauka.space",
-        "hmac" : "0E174E6A5A42BF17F52C1D5D955F24EDC532114FDDC155FAB805A50459072DCB"
+    "users": {
+        "lauralani": {
+            "mail": "dev@lauka.space",
+            "hmac": "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae"
+        },
+        "test": {
+            "mail": "test@lauka.space",
+            "hmac": "0E174E6A5A42BF17F52C1D5D955F24EDC532114FDDC155FAB805A50459072DCB"
+        }
     }
 }

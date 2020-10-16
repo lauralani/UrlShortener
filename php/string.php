@@ -16,4 +16,10 @@ function createSessionID ( $username ) {
     return hash("sha256", "$hashstring");
 }
 
+function hashPassword ($pass)
+{
+    return hash("sha256", "$pass");
+}
+
+
 ?>

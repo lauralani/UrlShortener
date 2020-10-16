@@ -1,6 +1,6 @@
 <?php
 
-require $_SESSION["docroot"] . "/php/string.php";
+require_once $_SESSION["docroot"] . "/php/string.php";
 
 class SessionManager
 {
@@ -62,11 +62,6 @@ class SessionManager
         $active_sessions = false;
 
         $sessionarray = SessionManager::get_sessions();
-
-        echo json_encode($sessionarray);
-
-        echo "<br><br>";
-
         $i = 0;
 
         foreach ( $sessionarray as $session )
@@ -82,22 +77,14 @@ class SessionManager
 
                 if (!$active_sessions)
                 {
-                    echo "<br>adding first array thing: Iteration" . $i . ", ID: " . $session->username . "<br>";
                     $active_sessions = array($session);
                 }
                 else
                 {
-                    echo "<br>adding array thing: Iteration" . $i . ", ID: " . $session->username . "<br>";
 
                     array_push($active_sessions, $session);
                 }
 
-            }
-            else 
-            {
-                // echo( $session->username . " is expired! <br/>");
-                echo "<br>doing nothing: Iteration" . $i  . ", ID: " . $session->username . "<br>";
-                
             }
             $i = $i +1;
         }

@@ -1,6 +1,6 @@
 <?php
 
-require $_SESSION["docroot"] . "/php/string.php";
+require_once $_SESSION["docroot"] . "/php/string.php";
 
 class UserManager
 {
